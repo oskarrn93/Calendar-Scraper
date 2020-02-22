@@ -16,7 +16,8 @@ if (process.env.SENTRY_DSN) {
 } else {
   console.log("No Sentry DSN configured");
 }
-const mongodbURL = `${process.env.MONGODB_URL}${process.env.MONGODB_DBNAME}`;
+
+const mongodbURL = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_URL}/${process.env.MONGODB_DBNAME}?retryWrites=true&w=majority`;
 
 let DEBUG = false;
 
@@ -129,7 +130,7 @@ function main() {
     mongoclient.connect(async err => {
       if (err) throw err;
 
-      const dbHandler = mongoclient.db("upcoming");
+      const dbHandler = mongoclient.db(process.env.MONGODB_DBNAME);
 
       const promises = [];
 
