@@ -26,18 +26,18 @@
   },
   "homepage": "https://github.com/oskarrn93/Scraper#readme",
   "dependencies": {
-    "@sentry/node": "^5.12.2",
-    "axios": "^0.19.0",
+    "@sentry/node": "^5.12.4",
+    "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "eslint": "^6.6.0",
+    "eslint": "^6.8.0",
     "express": "^4.17.1",
-    "ical-generator": "^1.8.1",
-    "mongodb": "^3.3.2"
+    "ical-generator": "^1.9.2",
+    "mongodb": "^3.5.3"
   },
   "devDependencies": {
-    "nodemon": "^1.19.2"
+    "nodemon": "^1.19.4"
   },
   "build": "npm build",
   "clean": "rm -rf node_modules",
