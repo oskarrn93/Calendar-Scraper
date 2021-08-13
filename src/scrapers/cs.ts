@@ -19,14 +19,14 @@ export const scrapeCS = async (DEBUG = false) => {
   return parsedGames
 }
 
-const parseHLTV = (data: string, DEBUG: boolean) => {
+const parseHLTV = (data: string, DEBUG: boolean): Event[] => {
   const $ = cheerio.load(data)
 
   const games = $('div.upcomingMatch')
 
   if (DEBUG) console.log(`games length: ${games.length}`)
 
-  const result: Event[] = games
+  return games
     .map((index, game) => {
       const start = new Date(cheerio(game).find('.matchTime').first().data('unix'))
 
@@ -63,17 +63,13 @@ const parseHLTV = (data: string, DEBUG: boolean) => {
         }
       })()
 
-      const event: Event = {
+      return {
         summary,
         description,
         start,
         end,
       }
-
-      return event
     })
     .get()
     .filter((element) => element !== null)
-
-  return result
 }

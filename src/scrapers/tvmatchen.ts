@@ -30,18 +30,17 @@ export const scrapeTvMatchen = async (DEBUG = false) => {
   })
   const { data } = response
 
-  const parsedGames = parseTvmatchen(data, DEBUG)
-  return parsedGames
+  return parseTvmatchen(data, DEBUG)
 }
 
-const parseTvmatchen = (data: string, DEBUG: boolean) => {
+const parseTvmatchen = (data: string, DEBUG: boolean): Event[] => {
   const $ = cheerio.load(data)
 
   const games = $('.match-list > div')
 
   if (DEBUG) console.log(`games length: ${games.length}`)
 
-  const result: Event[] = games
+  return games
     .map((index, game) => {
       const summary = $(game).find('.match-detail h3').first().text().trim()
 
@@ -73,17 +72,13 @@ const parseTvmatchen = (data: string, DEBUG: boolean) => {
 
       const end = addHours(start, 2)
 
-      const event: Event = {
+      return {
         summary,
         description,
         start,
         end,
       }
-
-      return event
     })
     .get()
     .filter((element) => element !== null)
-
-  return result
 }

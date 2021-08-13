@@ -19,8 +19,7 @@ export const scrapeNBA = async (DEBUG = false) => {
   })
   const { data } = response
 
-  const parsedGames = parseNBA(data, DEBUG)
-  return parsedGames
+  return parseNBA(data, DEBUG)
 }
 
 const parseNBA = ({ lscd }: NBASchedule, DEBUG: boolean): Event[] => {
@@ -63,18 +62,15 @@ const parseNBA = ({ lscd }: NBASchedule, DEBUG: boolean): Event[] => {
 
         https;//nba.com`
 
-          const result: Event = {
+          return {
             summary,
             description,
             start,
             end,
           }
-
-          return result
         })
         .filter((element) => element !== null) as Event[],
   )
 
-  const result = _.flatten(events)
-  return result
+  return _.flatten(events)
 }
