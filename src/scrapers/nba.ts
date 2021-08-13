@@ -5,8 +5,8 @@ import { parseFromTimeZone } from 'date-fns-timezone'
 import _ from 'lodash'
 import { Event, NBASchedule } from '../interfaces'
 
-const url =
-  'http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2020/league/00_full_schedule.json'
+const year = 2021
+const url = `http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/${year}/league/00_full_schedule.json`
 
 const teams = ['Celtics', 'Lakers', 'Warriors', 'Nets']
 
