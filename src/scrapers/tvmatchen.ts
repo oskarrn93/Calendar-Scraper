@@ -19,6 +19,8 @@ const teams = [
   'AC Milan',
 ]
 
+const blacklistKeywordRegex = /u\d\d|dam|women|youth/gi
+
 export const scrapeTvMatchen = async (DEBUG = false) => {
   const response = await axios.get(url, {
     headers: {
@@ -44,6 +46,10 @@ const parseTvmatchen = (data: string, DEBUG: boolean) => {
       const summary = $(game).find('.match-detail h3').first().text().trim()
 
       if (!teams.some((team) => summary.toLowerCase().includes(team.toLowerCase()))) {
+        return null
+      }
+
+      if (blacklistKeywordRegex.test(summary)) {
         return null
       }
 
