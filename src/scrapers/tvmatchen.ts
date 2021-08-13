@@ -7,11 +7,16 @@ import { Event } from '../interfaces'
 
 const url = 'https://www.tvmatchen.nu/'
 const teams = [
+  'Sverige',
   'Real Madrid',
   'Malmö FF',
   'Manchester United',
-  'Paris Saint Germain',
+  'PSG',
   'FC Bayern München',
+  'Manchester City',
+  'Barcelona',
+  'Chelsea',
+  'AC Milan',
 ]
 
 export const scrapeTvMatchen = async (DEBUG = false) => {
