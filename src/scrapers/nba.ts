@@ -8,7 +8,7 @@ import { Event, NBASchedule } from '../interfaces'
 const year = 2021
 const url = `http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/${year}/league/00_full_schedule.json`
 
-const teams = ['Celtics', 'Lakers', 'Warriors', 'Nets']
+const teams = ['Celtics', 'Lakers', 'Warriors', 'Nets', 'Heat', 'Grizzlies']
 
 export const scrapeNBA = async (DEBUG = false) => {
   const response = await axios.get(url, {
