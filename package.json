@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Web scraper",
   "main": "scraper.js",
+  "engines": {
+    "node": "14"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "scraper": "npx ts-node ./src/index.ts",
