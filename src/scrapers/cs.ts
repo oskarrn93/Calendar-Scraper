@@ -4,7 +4,7 @@ import addHours from 'date-fns/addHours'
 import { Event } from '../interfaces'
 
 const url = 'https://www.hltv.org/matches'
-const teams = ['fnatic', 'FaZe', 'NiP']
+const teams = ['fnatic', 'FaZe', 'NiP', 'G2', 'Astralis']
 
 export const scrapeCS = async (DEBUG = false) => {
   const response = await axios.get(url, {
