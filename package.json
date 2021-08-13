@@ -38,7 +38,6 @@
     "@types/cheerio": "^0.22.30",
     "@types/lodash": "^4.14.172",
     "@types/node": "^16.6.1",
-    "@types/yargs": "^17.0.2",
     "eslint": "^7.32.0",
     "nodemon": "^2.0.12",
     "ts-node": "^10.2.0",
