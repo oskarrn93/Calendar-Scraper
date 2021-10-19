@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { differenceInHours } from 'date-fns'
+import { differenceInMinutes } from 'date-fns'
 
 import type { ICalEventData } from 'ical-generator'
 import type { Event } from '../interfaces'
@@ -19,8 +19,8 @@ export const createCalendarEvents = (games: Event[]): ICalEventData[] => {
   })
 }
 
-export const getIsNeedScrapeAgain = (timestamp: Date | number = Date.now(), hours: number = 1) =>
-  differenceInHours(timestamp, Date.now()) > 3
+export const getIsNeedScrapeAgain = (timestamp: Date | number = Date.now(), ttl = 10) =>
+  differenceInMinutes(timestamp, Date.now()) > ttl
 
 export const getResponseHeaders = (id: Action) => ({
   'Content-Type': 'text/calendar',
