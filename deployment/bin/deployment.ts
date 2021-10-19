@@ -23,6 +23,6 @@ new DeploymentStack(app, 'CalendarAPIStack', {
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEFAULT_REGION,
+    region: process.env.CDK_DEFAULT_REGION ?? 'eu-north-1',
   },
 })

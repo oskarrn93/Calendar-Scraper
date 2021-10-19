@@ -1,29 +1,12 @@
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
 import { generateCalendar } from '../calendar'
-import * as database from '../database'
-import { Action, DatabaseEntry } from '../types'
-import { getIsNeedScrapeAgain, getResponseHeaders } from './../utils'
 
-const genericHandler = async (id: Action, event: APIGatewayProxyEvent) => {
-  let response: DatabaseEntry | undefined
-  try {
-    response = await database.getById(id)
-  } catch (error) {
-    console.error(error)
-  }
+import { Action } from '../types'
+import { getResponseHeaders } from './../utils'
 
-  let data: string
-
-  const isNeedScrapeAgain = getIsNeedScrapeAgain(response?.updated)
-
-  if (response && !isNeedScrapeAgain) {
-    data = response.data
-  } else {
-    data = await generateCalendar(id)
-    //write to database without blocking
-    database.insert({ id, data }).catch((error) => console.error(error))
-  }
+const genericHandler = async (id: Action, _event: APIGatewayProxyEvent) => {
+  const data = await generateCalendar(id)
 
   return {
     statusCode: 200,
