@@ -1,6 +1,6 @@
 {
   "name": "scraper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Web scraper",
   "main": "scraper.js",
   "engines": {
@@ -25,23 +25,23 @@
   },
   "homepage": "https://github.com/oskarrn93/Scraper#readme",
   "dependencies": {
-    "arg": "^5.0.0",
-    "aws-sdk": "^2.968.0",
-    "axios": "^0.21.1",
+    "arg": "^5.0.1",
+    "aws-sdk": "^2.1011.0",
+    "axios": "^0.23.0",
     "cheerio": "^1.0.0-rc.10",
-    "date-fns": "^2.23.0",
+    "date-fns": "^2.25.0",
     "date-fns-timezone": "^0.1.4",
-    "ical-generator": "^3.0.0",
+    "ical-generator": "^3.0.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.30",
-    "@types/lodash": "^4.14.172",
-    "@types/node": "^16.6.1",
-    "eslint": "^7.32.0",
-    "nodemon": "^2.0.12",
-    "ts-node": "^10.2.0",
-    "typescript": "^4.3.5"
+    "@types/lodash": "^4.14.175",
+    "@types/node": "^16.11.1",
+    "eslint": "^8.0.1",
+    "nodemon": "^2.0.14",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
   },
   "build": "npm build",
   "clean": "rm -rf node_modules",

@@ -22,7 +22,7 @@ const teams = [
 const blacklistKeywordRegex = /u\d\d|dam|women|youth/gi
 
 export const scrapeTvMatchen = async (DEBUG = false) => {
-  const response = await axios.get(url, {
+  const response = await axios.get<string>(url, {
     headers: {
       Accept: 'text/html',
       'User-Agent': 'calendar-scraper',

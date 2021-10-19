@@ -11,7 +11,7 @@ const url = `http://data.nba.com/data/10s/v2015/json/mobile_teams/nba/${year}/le
 const teams = ['Celtics', 'Lakers', 'Warriors', 'Nets', 'Heat', 'Grizzlies']
 
 export const scrapeNBA = async (DEBUG = false) => {
-  const response = await axios.get(url, {
+  const response = await axios.get<NBASchedule>(url, {
     headers: {
       Accept: 'application/json',
       'User-Agent': 'calendar-scraper',
