@@ -5,6 +5,9 @@ import * as apigateway from '@aws-cdk/aws-apigateway'
 import * as route53 from '@aws-cdk/aws-route53'
 import * as route53Targets from '@aws-cdk/aws-route53-targets'
 import * as certificateManager from '@aws-cdk/aws-certificatemanager'
+import * as ec2 from '@aws-cdk/aws-ec2'
+import * as batch from '@aws-cdk/aws-batch'
+import * as ecs from '@aws-cdk/aws-ecs'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
@@ -12,6 +15,12 @@ dotenv.config()
 export class DeploymentStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props)
+
+    /**
+     * vpc
+     */
+
+    const vpc = new ec2.Vpc(this, 'calendar-scraper-vpc')
 
     /**
      * Define lambda handlers
@@ -85,6 +94,37 @@ export class DeploymentStack extends cdk.Stack {
       zone,
       recordName: 'calendar',
       target: route53.RecordTarget.fromAlias(new route53Targets.ApiGateway(api)),
+    })
+
+    /**
+     * batch job
+     */
+
+    const batchComputeEnvironment = new batch.ComputeEnvironment(
+      this,
+      'calendar-scraper-batch-compute',
+      {
+        computeResources: {
+          type: batch.ComputeResourceType.FARGATE,
+          vpc,
+        },
+      },
+    )
+
+    const batchJobQueue = new batch.JobQueue(this, 'calendar-api-batch-job-queue', {
+      computeEnvironments: [
+        {
+          computeEnvironment: batchComputeEnvironment,
+          order: 1,
+        },
+      ],
+    })
+
+    new batch.JobDefinition(this, 'calendar-api-batch-job-definition', {
+      container: {
+        // todo-list is a directory containing a Dockerfile to build the application
+        image: ecs.ContainerImage.fromAsset(path.join(__dirname, '../todo-list')),
+      },
     })
   }
 }
