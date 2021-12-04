@@ -5,7 +5,7 @@ import addHours from 'date-fns/addHours'
 import { parseFromTimeZone } from 'date-fns-timezone'
 import { Event } from '../interfaces'
 
-const url = 'https://www.tvmatchen.nu/'
+const url = 'https://www.tvmatchen.nu/fotboll'
 const teams = [
   'Sverige',
   'Real Madrid',
@@ -41,7 +41,7 @@ const parseTvmatchen = (data: string, DEBUG: boolean): Event[] => {
   if (DEBUG) console.log(`games length: ${games.length}`)
 
   return games
-    .map((index, game) => {
+    .map((_index, game) => {
       const summary = $(game).find('.match-detail h3').first().text().trim()
 
       if (!teams.some((team) => summary.toLowerCase().includes(team.toLowerCase()))) {
