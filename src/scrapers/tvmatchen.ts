@@ -49,6 +49,11 @@ const parseTvmatchen = (data: string, DEBUG: boolean): Event[] => {
         return null
       }
 
+      const tournament = $(game).find('.match-detail p a').first().text().trim()
+      if (blacklistKeywordRegex.test(tournament)) {
+        return null
+      }
+
       const description = $(game)
         .find('.match-channels li a img')
         .map((index, channel) => {
