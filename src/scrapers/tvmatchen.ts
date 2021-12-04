@@ -12,11 +12,8 @@ const teams = [
   'Malmö FF',
   'Manchester United',
   'PSG',
-  'FC Bayern München',
   'Manchester City',
-  'Barcelona',
   'Chelsea',
-  'AC Milan',
 ]
 
 const blacklistKeywordRegex = /u\d\d|dam|women|youth/gi
