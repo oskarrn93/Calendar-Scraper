@@ -51,7 +51,7 @@ const parseNBA = ({ lscd }: NBASchedule, DEBUG: boolean): Event[] => {
             return null
           }
 
-          const end = addHours(start, 2.5)
+          const end = addHours(start, 3)
 
           const homeTeam = `${h.tc} ${h.tn}` //e.g. Boston Celtics
           const visitingTeam = `${v.tc} ${v.tn}`
