@@ -1,10 +1,12 @@
 import * as path from 'path'
 import * as cdk from '@aws-cdk/core'
-import * as lambda from '@aws-cdk/aws-lambda-nodejs'
+import * as lambda from '@aws-cdk/aws-lambda'
+import * as nodeLambda from '@aws-cdk/aws-lambda-nodejs'
 import * as apigateway from '@aws-cdk/aws-apigateway'
 import * as route53 from '@aws-cdk/aws-route53'
 import * as route53Targets from '@aws-cdk/aws-route53-targets'
 import * as certificateManager from '@aws-cdk/aws-certificatemanager'
+import * as iam from '@aws-cdk/aws-iam'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
@@ -14,34 +16,54 @@ export class DeploymentStack extends cdk.Stack {
     super(scope, id, props)
 
     /**
+     * Lambda insights
+     */
+    const lambdaRole = new iam.Role(this, 'lambdaRole', {
+      assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+    })
+
+    lambdaRole.addManagedPolicy({
+      managedPolicyArn: 'arn:aws:iam::aws:policy/CloudWatchLambdaInsightsExecutionRolePolicy',
+    })
+    lambdaRole.addManagedPolicy({
+      managedPolicyArn: 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+    })
+
+    const lambdaInsightsLayer = lambda.LayerVersion.fromLayerVersionArn(
+      this,
+      'LambdaInsightsLayer',
+      `arn:aws:lambda:${props?.env?.region}:580247275435:layer:LambdaInsightsExtension:17`,
+    )
+
+    /**
      * Define lambda handlers
      * */
 
-    const handlerNBA = new lambda.NodejsFunction(this, 'CalendarNBAHandler', {
+    const defaultLambdaConfig: nodeLambda.NodejsFunctionProps = {
+      depsLockFilePath: path.join(__dirname, '../../package.json'),
+      memorySize: 256,
+      timeout: cdk.Duration.seconds(10),
+      environment: {},
+      role: lambdaRole,
+      layers: [lambdaInsightsLayer],
+    }
+
+    const handlerNBA = new nodeLambda.NodejsFunction(this, 'CalendarNBAHandler', {
       entry: path.join(__dirname, '../../src/lambda/index.ts'),
       handler: 'nba',
-      depsLockFilePath: path.join(__dirname, '../../package.json'),
-      memorySize: 256,
-      timeout: cdk.Duration.seconds(10),
-      environment: {},
+      ...defaultLambdaConfig,
     })
 
-    const handlerCS = new lambda.NodejsFunction(this, 'CalendarCSHandler', {
+    const handlerCS = new nodeLambda.NodejsFunction(this, 'CalendarCSHandler', {
       entry: path.join(__dirname, '../../src/lambda/index.ts'),
       handler: 'cs',
-      depsLockFilePath: path.join(__dirname, '../../package.json'),
-      memorySize: 256,
-      timeout: cdk.Duration.seconds(10),
-      environment: {},
+      ...defaultLambdaConfig,
     })
 
-    const handlerFootball = new lambda.NodejsFunction(this, 'CalendarFootballHandler', {
+    const handlerFootball = new nodeLambda.NodejsFunction(this, 'CalendarFootballHandler', {
       entry: path.join(__dirname, '../../src/lambda/index.ts'),
       handler: 'football',
-      depsLockFilePath: path.join(__dirname, '../../package.json'),
-      memorySize: 256,
-      timeout: cdk.Duration.seconds(10),
-      environment: {},
+      ...defaultLambdaConfig,
     })
 
     /**
