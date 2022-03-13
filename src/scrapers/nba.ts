@@ -60,7 +60,7 @@ const parseNBA = ({ lscd }: NBASchedule, DEBUG: boolean): Event[] => {
           const summary = `${visitingTeam} - ${homeTeam}`
           const description = `${location}
 
-        https;//nba.com`
+        https://nba.com`
 
           return {
             summary,
